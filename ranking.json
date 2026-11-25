@@ -43,10 +43,10 @@
       "students": 40,
       "participants": 38,
       "participation": 95,
-      "total": 4811,
-      "avg": 120.275,
+      "total": 4837,
+      "avg": 120.925,
       "totals": [
-        1335,
+        1361,
         1193,
         1076,
         429,
@@ -54,7 +54,7 @@
         430
       ],
       "fieldAvgs": [
-        33.375,
+        34.025,
         29.825,
         26.9,
         10.725,
@@ -62,7 +62,7 @@
         10.75
       ],
       "fieldParticipants": [
-        23,
+        24,
         16,
         16,
         10,
@@ -107,5 +107,36 @@
       "scoreN": 37,
       "scoreAvg": 11.54054054054054
     }
-  ]
+  ],
+  "heroes": {
+    "status": "ready",
+    "entries": [
+      {
+        "rank": 1,
+        "cls": 3,
+        "count": 830
+      },
+      {
+        "rank": 2,
+        "cls": 3,
+        "count": 730
+      },
+      {
+        "rank": 3,
+        "cls": 4,
+        "count": 727
+      },
+      {
+        "rank": 4,
+        "cls": 3,
+        "count": 667
+      },
+      {
+        "rank": 5,
+        "cls": 3,
+        "count": 642
+      }
+    ],
+    "cutoffTie": false
+  }
 }
