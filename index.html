@@ -110,6 +110,9 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
   .home-buttons .comic-button{min-width:0;width:100%;font-size:clamp(14px,4.15vw,18px);padding:13px 10px;}
   .home-hint{padding:0 5px;}
 }
+
+.heroes-board{margin:18px 0;border:3px solid #111;background:#fff;box-shadow:5px 5px 0 #111;padding:15px}.heroes-board h3{margin:0 0 5px;font-family:Impact,"Yu Gothic",sans-serif;font-size:27px;letter-spacing:.025em}.heroes-subtitle{font-size:18px;font-weight:950;margin:0 0 4px}.heroes-period{font-size:13px;color:#555;font-weight:800;margin:0 0 12px}.heroes-list{display:grid;gap:7px}.heroes-row{display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:12px;padding:12px;border:2px solid #111;background:#f2f2f2;font-weight:900}.heroes-row.best{background:#171719;color:white}.heroes-row .heroes-num{font-size:clamp(22px,4vw,35px);white-space:nowrap}.heroes-row .heroes-name{font-size:clamp(13px,2.5vw,19px)}.heroes-footer{margin:12px 0 0;font-size:13px;font-weight:900;text-align:center}.heroes-empty{padding:20px 12px;background:#f3f3f3;text-align:center;line-height:1.75}.date-tools{margin:16px 0 0;padding:13px;border:2px solid #222;background:#f7f7f7}.date-tools input{padding:7px;border:1px solid #555}.date-tools p{font-size:12px;margin:8px 0 0}
+@media(max-width:420px){.heroes-row{grid-template-columns:40px minmax(0,1fr) auto;gap:7px;padding:9px 7px}.heroes-row .heroes-num{font-size:20px}.heroes-row .heroes-name{font-size:13px;overflow-wrap:anywhere}}
 </style>
 </head>
 <body>
@@ -130,15 +133,15 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
 <div class="shell">
  <div class="section-tag">THE LATEST RESULTS</div>
  <section class="panel public-summary">
-   <div class="public-title"><div><h2>クラス対抗ランキング速報！</h2><p class="panel-lead" style="margin-bottom:0">1人平均取組問題数で勝負！クラス全員の頑張りが順位を変える。</p></div><strong id="publicUpdated" class="public-date">公開データ確認中…</strong></div>
+   <div class="public-title"><div><h2>クラス対抗＆個人ランキング速報！</h2><p class="panel-lead" style="margin-bottom:0">1人平均取組問題数で勝負！クラス全員の頑張りが順位を変える。</p></div><strong id="publicUpdated" class="public-date">公開データ確認中…</strong></div>
    <div id="publicStatus" class="status" role="status" aria-live="polite">最新のランキングを読み込み中…</div>
    <div id="publicContent" class="hidden">
      <div id="publicMain" class="public-ranks"></div>
      <div class="public-two"><div class="public-box"><h3>🤝 参加率ランキング</h3><div id="publicParticipants"></div></div><div class="public-box"><h3>🔥 総取組問題数ランキング</h3><div id="publicTotals"></div></div></div>
+     <section id="publicHeroes" class="heroes-board"></section>
      <div class="public-box public-fields"><h3>🏆 6分野別チャンピオン</h3><div id="publicFields" class="public-field-grid"></div></div>
-     <div class="public-box"><h3>📊 初回診断テスト平均点 <small>参考データ</small></h3><div id="publicDiagnostic" class="public-diagnostic"></div></div>
      <div class="public-boost">「誰かがやる」じゃ、勝てない。<br><strong>「自分もやる」が、クラスを変える！</strong><br><span>君の10問が、クラスの順位を動かす！</span></div>
-     <div class="public-method"><strong>📌 ランキングの算出方法</strong><p>1人平均＝練習問題6分野の合計÷クラス人数 ／ 参加率＝1問以上解いた人数÷クラス人数×100 ／ 総問題数＝クラス全員の練習問題数合計 ／ 分野別＝各分野の問題数合計÷クラス人数 ／ 初回診断平均＝受験者のみの平均点</p><p>※毎週水曜更新・累計値です。初回診断平均は学力の伸びを直接示すものではありません。</p></div>
+     <div class="public-method"><strong>📌 ランキングの算出方法</strong><p>1人平均＝練習問題6分野の合計÷クラス人数 ／ 参加率＝1問以上解いた人数÷クラス人数×100 ／ 総問題数＝クラス全員の練習問題数合計 ／ 分野別＝各分野の問題数合計÷クラス人数</p><p>※クラス別・個人別ともにCSV取得日までの累計です。個人別は6分野の取組問題数の合計。氏名・番号は公開しません。</p></div>
    </div>
  </section>
  <footer>T-DX LAB · 情報Ⅰ BOOST DAY / LIFE IS TECH LESSON BATTLE<br>学習の積み重ねを、クラスみんなの力に。</footer>
@@ -158,7 +161,7 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
 </div></header>
 <div class="shell">
   <div class="section-tag">01 / CSV UPLOAD</div>
-  <section class="panel" aria-labelledby="uploadTitle"><h2 id="uploadTitle">3クラスのCSVを読み込もう！</h2><p class="panel-lead">ライフイズテックレッスンからダウンロードした <strong>3年3組・4組・5組</strong> のCSVをまとめて選択。クラス名はファイルの中身から自動判別します。前回分のCSVは必要ありません。</p>
+  <section class="panel" aria-labelledby="uploadTitle"><h2 id="uploadTitle">3クラスのCSVを読み込もう！</h2><p class="panel-lead">ライフイズテックレッスンからダウンロードした <strong>3年3組・4組・5組</strong> のCSVをまとめて選択。クラス名はファイルの中身から自動判別します。3クラス全員の累計問題数から、個人累計TOP 5も自動集計します。過去のCSVは不要です。</p>
     <label class="upload-zone" id="dropZone" for="fileInput" tabindex="0"><span class="upload-icon">📂</span><strong>CSVをここにドロップ / クリックして選択</strong><small>3ファイルまとめて選択できます。あとから不足分を追加してもOK。</small><input id="fileInput" type="file" accept=".csv,text/csv" multiple></label>
     <div class="class-cards" id="fileCards">
       <div class="class-card" data-cls="3"><div class="class-id">3年3組</div><div class="class-state" id="file3">未読込</div></div>
@@ -166,7 +169,8 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
       <div class="class-card" data-cls="5"><div class="class-id">3年5組</div><div class="class-state" id="file5">未読込</div></div>
     </div>
     <div class="action-row"><button class="btn-clear" id="resetBtn" type="button">↺ 読込をリセット</button><span id="uploadStatus" class="status" role="status" aria-live="polite">3クラス分がそろうと集計結果が表示されます。</span></div>
-    <div class="notice">🔒 <strong>プライバシー：</strong>CSVはこの端末のブラウザ内だけで読み込みます。氏名や学籍番号・出席番号は集計にもPDFにも使用しません。GitHubにはHTMLと<strong>クラス集計だけを含むranking.json</strong>を配置してください。生徒名入りCSVは絶対にアップロードしないでください。</div>
+    <div class="date-tools"><label for="reportDate"><strong>CSV取得日：</strong></label> <input id="reportDate" type="date"><p id="dateStatus" role="status"></p></div>
+    <div class="notice">🔒 <strong>プライバシー：</strong>CSVは端末内で処理し、個人別問題数をブラウザに永続保存しません。公開用JSONにはクラス集計と上位者の順位・クラス・累計問題数のみを含めます。氏名・番号・CSVはGitHubへアップロードしないでください。クラスと問題数から本人が推測される場合があります。公開範囲は学校の方針に従ってください。</div>
   </section>
 
   <div id="resultArea">
@@ -176,12 +180,13 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
       <div class="table-scroll"><table class="columns-table"><thead><tr><th>クラス</th><th>人数</th><th>参加者</th><th>参加率</th><th>総問題数</th><th>1人平均</th><th>初回診断平均</th></tr></thead><tbody id="statsBody"></tbody></table></div>
       <p class="mini-note">※初回診断平均は受験者のみで計算します。初回診断と練習問題数だけから学力の伸びは判定できません。</p>
     </section>
+    <section id="teacherHeroes" class="heroes-board"></section>
     <div class="section-tag">03 / DOWNLOAD</div>
-    <section class="panel"><h2>白黒ランキングPDFを出力！</h2><p class="panel-lead">A4横・1ページ。メイン3部門、分野別6部門、初回診断の平均点、算出方法を掲載。<strong>PDFはボタン1つで直接ダウンロード</strong>できます。</p>
+    <section class="panel"><h2>白黒ランキングPDFを出力！</h2><p class="panel-lead">A4横・1ページ。左側にクラス戦、右側に個人ランキングを掲載。初回診断は上の教員用集計表に残します。<strong>PDFはボタン1つで直接ダウンロード</strong>できます。</p>
       <div class="action-row"><button class="btn-print" id="pdfBtn" type="button">📄 PDFをダウンロード（A4横）</button><button class="btn-png" id="pngBtn" type="button">🖼 画像をダウンロード（PNG）</button></div>
-      <div class="publish-panel"><h3>🚀 生徒に最新ランキングを公開する</h3><p>「公開用データ」をダウンロードして、GitHubリポジトリ内の <code>ranking.json</code> を上書きすると、生徒のランキング画面も更新されます。個人データは含みません。</p><button class="btn-publish" id="jsonBtn" type="button">🌐 公開用ランキングデータ（ranking.json）を保存</button><p class="publish-note">※このボタンだけではWeb上のデータは更新されません。ダウンロードした <code>ranking.json</code> をGitHubへアップロード・Commitしてください。</p></div>
+      <div class="publish-panel"><h3>🚀 生徒に最新ランキングを公開する</h3><p>「公開用データ」をダウンロードして、GitHubリポジトリ内の <code>ranking.json</code> を上書きすると、生徒のランキング画面も更新されます。氏名・番号・照合キーは含みません。</p><button class="btn-publish" id="jsonBtn" type="button">🌐 公開用ランキングデータ（ranking.json）を保存</button><p class="publish-note">※このボタンだけではWeb上のデータは更新されません。ダウンロードした <code>ranking.json</code> をGitHubへアップロード・Commitしてください。</p></div>
       <div class="preview-frame"><canvas id="reportCanvas" width="3508" height="2480" aria-label="白黒ランキングPDFのプレビュー"></canvas></div>
-      <div class="notice">紙に出すときはダウンロードしたPDFを開き、<strong>A4横・白黒・用紙に合わせる</strong>で印刷してください。記載する日付はPDFを作成した日です。比較対象はその時点までの<strong>累計</strong>です。</div>
+      <div class="notice">紙に出すときはダウンロードしたPDFを開き、<strong>A4横・白黒・用紙に合わせる</strong>で印刷してください。記載する日付は指定したCSV取得日です。クラス戦・個人戦ともに累計取り組み問題数です。</div>
     </section>
   </div>
   <footer>T-DX LAB · 情報Ⅰ BOOST DAY / LIFE IS TECH LESSON BATTLE<br>学習の積み重ねを、クラスみんなの力に。</footer>
@@ -231,7 +236,7 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
       const d=champs[0],tie=champs.filter(q=>Math.abs(q.fieldAvgs[i]-d.fieldAvgs[i])<1e-9);
       const card=htmlNode('div','public-field');card.append(htmlNode('div','field-name',`${i+1}. ${field}`),htmlNode('div','champion',tie.map(q=>q.name).join('・')),htmlNode('div','field-qty',`1人平均 ${d.fieldAvgs[i].toFixed(1)}問`));return card;
     }));
-    $('#publicDiagnostic').replaceChildren(...list.map(d=>{const card=htmlNode('div','');card.append(htmlNode('div','',d.name),htmlNode('strong','',d.scoreAvg===null?'未実施':d.scoreAvg.toFixed(1)+'点'),htmlNode('small','',`受験 ${d.scoreN}/${d.students} 人`));return card;}));
+    renderHeroes($('#publicHeroes'),{...(data.heroes||{status:'pending'}),date:data.updatedAt});
   }
   let publicRequest=0;
   async function loadPublic(){
@@ -273,7 +278,7 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
     const m=vals.match(/(?:高\s*3\s*[_-]?\s*|3\s*年\s*)([345])\s*組/);
     if(!m)throw Error('対象クラス（高3_3組・高3_4組・高3_5組）を判別できません。');return Number(m[1]);
   }
-  function analyze(rows,fileName){
+  async function analyze(rows,fileName){
     if(rows.length<4||rows[0][0].trim()!=='クラス名')throw Error('ライフイズテックレッスンのCSV形式ではありません（先頭のクラス名列がありません）。');
     const c=determineClass(rows,fileName),groups=[];let active='';
     const h0=rows[0],h1=rows[1],h2=rows[2];
@@ -286,9 +291,10 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
     }
     if(practice.length!==6||diagnostic.length!==1)throw Error(`必要な列を確認できません（練習問題 ${practice.length} 列、初回診断 ${diagnostic.length} 列）。CSVの形式をご確認ください。`);
     if(!practice.every((i,j)=>String(h1[i]||'').includes(`${j+1}.`)))throw Error('練習問題6分野の順番を認識できません。');
-    const totals=Array(6).fill(0),fieldParticipants=Array(6).fill(0);
+    const totals=Array(6).fill(0),fieldParticipants=Array(6).fill(0),individualTotals=[];
     let students=0,participants=0,scoreSum=0,scoreN=0;
-    for(const row of rows.slice(3)){
+    const studentRows=rows.slice(3).filter(row=>row.some(x=>String(x??'').trim()));
+    for(const row of studentRows){
       if(!row.some(x=>String(x??'').trim()))continue;
       const cls=(row[0]||'').trim();
       if(cls&&!cls.includes(`3_${c}組`)&&!cls.includes(`3年${c}組`))throw Error('CSVに複数のクラスが混在しています。');
@@ -298,20 +304,21 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
         const n=getNum(row[practice[k]],`${c}組 ${fieldNames[k]}`);
         totals[k]+=n;sum+=n;if(n>0)fieldParticipants[k]++;
       }
+      individualTotals.push(sum);
       if(sum>0)participants++;
       const raw=String(row[diagnostic[0]]??'').trim();
       if(raw!==''&&raw!=='-'&&raw!=='未実施'&&raw!=='未受験'){const score=getNum(raw,`${c}組 初回診断`);scoreSum+=score;scoreN++;}
     }
     if(students<1)throw Error('生徒データが見つかりません。');
     const sum=totals.reduce((a,b)=>a+b,0);
-    return {cls:c,name:`3年${c}組`,students,participants,participation:100*participants/students,total:sum,avg:sum/students,totals,fieldAvgs:totals.map(n=>n/students),fieldParticipants,scoreN,scoreAvg:scoreN?scoreSum/scoreN:null,fileName};
+    return {cls:c,name:`3年${c}組`,students,participants,participation:100*participants/students,total:sum,avg:sum/students,totals,fieldAvgs:totals.map(n=>n/students),fieldParticipants,scoreN,scoreAvg:scoreN?scoreSum/scoreN:null,fileName,individualTotals};
   }
   async function handleFiles(files){
     const list=Array.from(files||[]);if(!list.length)return;
     let successes=[],errors=[];
     for(const f of list){
       if(!/\.csv$/i.test(f.name)){errors.push(`${f.name} はCSVではありません。`);continue;}
-      try{const data=analyze(await readCSV(f),f.name);state.set(data.cls,data);successes.push(`${data.cls}組`);}catch(e){errors.push(`${f.name}: ${e.message}`);}
+      try{const data=await analyze(await readCSV(f),f.name);state.set(data.cls,data);successes.push(`${data.cls}組`);}catch(e){errors.push(`${f.name}: ${e.message}`);}
     }
     $('#fileInput').value='';
     updateScreen();
@@ -328,10 +335,38 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
   $('#resetBtn').addEventListener('click',()=>{state.clear();updateScreen();$('#uploadStatus').className='status';$('#uploadStatus').textContent='読み込みをリセットしました。';});
   const sorted=(key)=>[...state.values()].sort((a,b)=>b[key]-a[key]||a.cls-b.cls);
   const all=()=>[3,4,5].map(cls=>state.get(cls));
+  const validDate=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d))&&new Date(d+'T00:00:00Z').toISOString().slice(0,10)===d;
+  const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  const dateLabel=d=>String(d||'').replaceAll('-','/');
+  const selectedDate=()=>$('#reportDate').value;
+  $('#reportDate').value=today();$('#reportDate').max=today();
+  const validSelection=()=>validDate(selectedDate())&&selectedDate()<=today();
+  function heroesResult(){
+    if(state.size!==3||!validSelection())return {status:'pending',date:selectedDate()};
+    const people=all().flatMap(d=>d.individualTotals.filter(n=>n>0).map(count=>({cls:d.cls,count})));
+    people.sort((a,b)=>b.count-a.count||a.cls-b.cls);
+    return {status:'ready',date:selectedDate(),entries:people.slice(0,5).map(d=>({rank:1+people.filter(q=>q.count>d.count).length,cls:d.cls,count:d.count})),cutoffTie:people.length>5&&people[4].count===people[5].count};
+  }
+  function renderHeroes(root,h){
+    root.replaceChildren(htmlNode('h3','','BOOST HEROES'),htmlNode('div','heroes-subtitle','個人累計 TOP 5'),htmlNode('div','heroes-period',h.date?`${dateLabel(h.date)} 現在`:'毎週水曜日更新'));
+    if(h.status==='ready'&&Array.isArray(h.entries)){
+      const list=htmlNode('div','heroes-list');
+      for(const d of h.entries.slice(0,5)){if(![3,4,5].includes(d.cls)||!Number.isFinite(d.count)||d.count<=0||!Number.isInteger(d.rank)||d.rank<1||d.rank>5)continue;const row=htmlNode('div','heroes-row'+(d.rank===1?' best':''));row.append(htmlNode('span','',`${d.rank}位`),htmlNode('span','heroes-name',`3年${d.cls}組のだれか・・・`),htmlNode('strong','heroes-num',`${fmt(d.count)}問`));list.append(row);}
+      root.append(list);if(!list.children.length)root.append(htmlNode('div','heroes-empty','まだ取り組み問題数がありません。今日の1問からスタート！'));
+      if(h.cutoffTie)root.append(htmlNode('p','heroes-period','※同数は同順位。掲載枠は5人まで（同数の場合はクラス順）。'));
+      root.append(htmlNode('p','heroes-footer','この中に、君はいるか！？ 積み重ねた努力は、裏切らない。 次にランクインするのは君だ！'));
+    }else{const box=htmlNode('div','heroes-empty');box.append(htmlNode('strong','','個人累計ランキング 準備中！'),htmlNode('div','','次回の公開データ更新で、累計TOP 5を発表します。'));root.append(box);}
+  }
+  function refreshDateStatus(){
+    const valid=validSelection();
+    $('#dateStatus').textContent=valid?'CSV取得日までの累計問題数を集計します。過去データの保存は不要です。':'CSV取得日を正しく指定してください。';
+    for(const id of ['jsonBtn','pdfBtn','pngBtn'])$('#'+id).disabled=state.size!==3||!valid;
+  }
+  $('#reportDate').addEventListener('change',updateScreen);
   function updateScreen(){
     [3,4,5].forEach(c=>{const el=$('#file'+c),d=state.get(c);el.classList.toggle('ok',!!d);el.textContent=d?`✓ 読込済｜${d.students}人・${fmt(d.total)}問`:'未読込';});
     const ready=state.size===3;
-    $('#resultArea').style.display=ready?'block':'none';if(!ready)return;
+    $('#resultArea').style.display=ready?'block':'none';refreshDateStatus();if(!ready)return;
     const statItems=[{label:'MAIN BATTLE｜1人平均',key:'avg',suffix:'問',format:f1},{label:'TEAM POWER｜参加率',key:'participation',suffix:'%',format:f1},{label:'TOTAL POWER｜総取組',key:'total',suffix:'問',format:fmt}];
     $('#quickStats').replaceChildren(...statItems.map(item=>{
       const d=sorted(item.key)[0],box=document.createElement('div');box.className='quick-stat';
@@ -345,6 +380,7 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
         const td=document.createElement('td');td.textContent=s;if(i===0)td.style.fontWeight='900';tr.append(td);
       }return tr;
     }));
+    renderHeroes($('#teacherHeroes'),heroesResult());
     drawReport();
   }
 
@@ -369,90 +405,45 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
   function ranks(list){const arr=[...list].sort((a,b)=>b.value-a.value||a.cls-b.cls);return arr.map((d,i)=>({...d,rank:1+arr.filter(q=>q.value>d.value+1e-12).length}));}
   function displayDate(){return new Intl.DateTimeFormat('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Tokyo'}).format(new Date());}
   function drawReport(){
-    ctx.setTransform(canvas.width/1000,0,0,canvas.height/707,0,0);
-    rect(0,0,1000,707,WHITE);
-    // Two thin comic rules + intentional white negative space for inexpensive black-and-white printing.
-    rect(24,20,951,100,BLACK);stripe(845,20,130,100,11);
-    text('T-DX LAB   ×   LIFE IS TECH LESSON',43,41,11,WHITE,900);
-    text('情報Ⅰ',42,94,52,WHITE,1000);
-    text('BOOST DAY!',195,92,49,WHITE,1000,'left','Impact,"Arial Black",sans-serif');
-    rect(692,33,258,68,WHITE);
-    text('CLASS BATTLE / WEDNESDAY',709,55,11,BLACK,900);
-    text(displayDate(),709,80,21,BLACK,900);
-    text('3年3組  VS  3年4組  VS  3年5組',43,113,13,WHITE,850);
-    // Section main
-    rr(25,128,621,202,8,WHITE,BLACK,2.3);
-    rect(25,128,621,32,BLACK);text('MAIN BATTLE',41,151,19,WHITE,1000,'left','Impact,"Arial Black",sans-serif');
-    text('1人平均取組問題数',213,150,17,WHITE,900);
-    const avgList=ranks(all().map(d=>({cls:d.cls,value:d.avg})));
-    const maxAvg=Math.max(...avgList.map(d=>d.value),1);
-    avgList.forEach((d,i)=>{
-      const yy=165+i*48;
-      if(i===0){rect(38,yy-10,594,50,'#f2f2f2');}
-      rr(44,yy-1,55,38,7,i===0?BLACK:WHITE,BLACK,1.5);
-      text(`${d.rank}位`,72,yy+24,23,i===0?WHITE:BLACK,1000,'center');
-      text(`3年${d.cls}組`,117,yy+22,19,BLACK,1000);
-      rect(214,yy+6,293,19,'#e5e5e5');const ww=293*d.value/maxAvg;
-      rect(214,yy+6,ww,19,i===0?'#303030':i===1?'#8c8c8c':'#b6b6b6');
-      text(`${f1(d.value)}問`,622,yy+24,23,BLACK,1000,'right');
-    });
-    text('計算：練習問題6分野の合計 ÷ クラス人数',41,319,10,GRAY,750);
-    // side panels
-    function smallRanking(y,label,key,toDisplay){
-      rr(660,y,315,98,7,WHITE,BLACK,2);rect(660,y,315,27,BLACK);text(label,671,y+19,14,WHITE,1000);
-      const ranking=ranks(all().map(d=>({cls:d.cls,value:d[key]})));
-      ranking.forEach((d,i)=>{
-        const yy=y+43+i*17;
-        text(`${d.rank}`,677,yy,15,BLACK,900,'center');
-        text(`3年${d.cls}組`,702,yy,13,BLACK,800);
-        text(toDisplay(d.value),958,yy,15,BLACK,900,'right');
-        if(i<2)line(670,yy+5,962,yy+5,'#dedede',.7);
-      });
-    }
-    smallRanking(128,'TEAM POWER / 参加率','participation',v=>`${f1(v)}%`);
-    smallRanking(232,'TOTAL POWER / 総取組問題数','total',v=>`${fmt(v)}問`);
-    // Fields
-    rect(25,338,950,21,BLACK);text('AREA CHAMPIONS / 6分野別ランキング（1人平均問題数）',38,353,14,WHITE,1000);
-    const cardWidth=309;const lefts=[25,346,667],ys=[362,453];
-    const shortNames=['情報社会の問題解決','情報デザイン','コンピュータ','プログラミング','情報通信ネットワーク','データの活用'];
+    ctx.setTransform(canvas.width/1000,0,0,canvas.height/707,0,0);rect(0,0,1000,707,WHITE);
+    rect(24,20,952,88,BLACK);stripe(850,20,126,88,11);
+    text('T-DX LAB   ×   LIFE IS TECH LESSON',40,38,11,WHITE,900);
+    text('情報Ⅰ',40,82,44,WHITE,1000);text('BOOST DAY!',173,81,44,WHITE,1000,'left','Impact,"Arial Black",sans-serif');
+    text('3年3組  VS  3年4組  VS  3年5組',40,99,12,WHITE,850);
+    rect(752,32,205,61,WHITE);text('CLASS BATTLE / WEDNESDAY',763,50,10,BLACK,900);text(dateLabel(selectedDate()),763,76,22,BLACK,900);
+    const lx=24,lw=598,rx=634,rw=342;
+    // 左：累計クラス戦
+    rr(lx,118,lw,183,7,WHITE,BLACK,2);rect(lx,118,lw,28,BLACK);
+    text('MAIN BATTLE',37,138,18,WHITE,1000,'left','Impact,"Arial Black",sans-serif');text('1人平均取組問題数（累計）',194,137,14,WHITE,900);
+    const avgList=ranks(all().map(d=>({cls:d.cls,value:d.avg}))),maxAvg=Math.max(...avgList.map(d=>d.value),1);
+    avgList.forEach((d,i)=>{const y=151+i*43;if(i===0)rect(33,y,580,40,'#f1f1f1');rr(39,y+4,51,32,5,i===0?BLACK:WHITE,BLACK,1.5);text(`${d.rank}位`,64.5,y+26,20,i===0?WHITE:BLACK,1000,'center');text(`3年${d.cls}組`,101,y+26,17,BLACK,1000);rect(186,y+12,293,15,'#e4e4e4');rect(186,y+12,293*d.value/maxAvg,15,['#303030','#888','#b5b5b5'][i]);text(`${f1(d.value)}問`,607,y+27,21,BLACK,1000,'right');});
+    text('計算：練習問題6分野の合計 ÷ クラス人数',37,291,10,GRAY,700);
+    function smallRanking(x,label,key,format){const y=309,w=295;rr(x,y,w,96,6,WHITE,BLACK,1.6);rect(x,y,w,24,BLACK);text(label,x+10,y+17,13,WHITE,950);ranks(all().map(d=>({cls:d.cls,value:d[key]}))).forEach((d,i)=>{const yy=y+42+i*19;text(`${d.rank}位`,x+10,yy,12,BLACK,900);text(`3年${d.cls}組`,x+48,yy,13,BLACK,850);text(format(d.value),x+w-10,yy,15,BLACK,950,'right');if(i<2)line(x+9,yy+5,x+w-9,yy+5,'#ddd',.7);});}
+    smallRanking(lx,'TEAM POWER / 参加率','participation',v=>f1(v)+'%');smallRanking(lx+303,'TOTAL POWER / 総取組問題数','total',v=>fmt(v)+'問');
+    rect(lx,413,lw,24,BLACK);text('AREA CHAMPIONS / 6分野別ランキング（1人平均）',35,430,13,WHITE,950);
     for(let k=0;k<6;k++){
-      const x=lefts[k%3],y=ys[Math.floor(k/3)];rr(x,y,308,83,6,WHITE,BLACK,1.5);
-      rect(x+1,y+1,28,26,k%2?'#dddddd':BLACK);text(String(k+1).padStart(2,'0'),x+15,y+19,15,k%2?BLACK:WHITE,1000,'center');
-      fitText(shortNames[k],x+37,y+20,257,13,BLACK,950);
-      const vals=ranks(all().map(d=>({cls:d.cls,value:d.fieldAvgs[k]})));const max=Math.max(...vals.map(d=>d.value),.1);
-      vals.forEach((d,i)=>{
-        const yy=y+35+i*16;
-        text(`${d.rank}位`,x+10,yy,12,BLACK,900);
-        text(`${d.cls}組`,x+43,yy,12,BLACK,850);
-        rect(x+85,yy-9,132,10,LIGHT);rect(x+85,yy-9,132*d.value/max,10,i===0?'#282828':i===1?'#888888':'#bbbbbb');
-        text(f1(d.value)+'問',x+294,yy,12,BLACK,900,'right');
-      });
+      const x=lx+(k%3)*201,y=442+Math.floor(k/3)*73,w=196;rr(x,y,w,68,4,WHITE,BLACK,1.3);
+      rect(x+1,y+1,23,18,k%2?'#ddd':BLACK);text(String(k+1).padStart(2,'0'),x+12.5,y+14,11,k%2?BLACK:WHITE,1000,'center');fitText(fieldNames[k],x+28,y+14,w-32,11,BLACK,950);
+      const vals=ranks(all().map(d=>({cls:d.cls,value:d.fieldAvgs[k]}))),max=Math.max(...vals.map(d=>d.value),.1);
+      vals.forEach((d,i)=>{const yy=y+31+i*15;text(`${d.rank}位`,x+6,yy,10,BLACK,900);text(`${d.cls}組`,x+31,yy,10,BLACK,850);rect(x+56,yy-8,77,8,LIGHT);rect(x+56,yy-8,77*d.value/max,8,['#292929','#888','#bbb'][i]);text(f1(d.value)+'問',x+w-6,yy,10.5,BLACK,900,'right');});
     }
-    // baseline
-    rr(25,541,950,44,7,WHITE,BLACK,1.6);
-    rect(25,541,305,44,'#ededed');
-    text('START LINE',38,558,15,BLACK,1000,'left','Impact,"Arial Black",sans-serif');
-    text('初回診断テスト 平均点（参考）',38,576,12,BLACK,950);
-    all().forEach((d,i)=>{
-      const xx=360+i*204;
-      text(`3年${d.cls}組`,xx,558,13,BLACK,900);
-      text(d.scoreAvg===null?'未受験':f1(d.scoreAvg)+'点',xx+145,569,23,BLACK,1000,'right');
-      text(`${d.scoreN}人受験 / 全${d.students}人`,xx,580,10,GRAY,700);
-    });
-    // いつも表示する応援メッセージ。CSVを読み込むだけでPDF・PNGの両方に反映。
-    rr(25,590,950,60,7,WHITE,BLACK,2.6);
-    rect(26,591,141,58,BLACK);
-    text('BOOST',96,617,23,WHITE,1000,'center','Impact,"Arial Black",sans-serif');
-    text('MESSAGE',96,635,17,WHITE,900,'center','Impact,"Arial Black",sans-serif');
-    text('「誰かがやる」じゃ、勝てない。',185,610,19,BLACK,1000);
-    text('「自分もやる」が、クラスを変える！',185,631,21,BLACK,1000);
-    text('君の10問が、クラスの順位を動かす！',946,646,15,BLACK,950,'right');
-    // methodology
-    rect(25,654,950,38,'#f3f3f3');
-    text('算出方法',35,667,11,BLACK,1000);
-    text('1人平均＝練習問題6分野の合計÷全生徒数　　参加率＝練習問題を1問以上解いた人数÷全生徒数×100',113,667,10,BLACK,770);
-    text('総取組数＝6分野合計　　分野別＝各分野の合計÷全生徒数　　初回診断平均＝点数合計÷受験者数（未受験除外）',35,683,10,BLACK,770);
-    text('※本紙はCSV集計時点までの累計値です。初回診断の平均点だけでは学力の伸びは判定できません。個人情報は掲載していません。',27,702,9,GRAY,680);
+    // 右：個人の累計問題数（順位・クラス・問題数のみ）
+    const w=heroesResult();rr(rx,118,rw,465,7,WHITE,BLACK,2.4);rect(rx,118,rw,84,BLACK);
+    text('BOOST HEROES',rx+rw/2,150,30,WHITE,1000,'center','Impact,"Arial Black",sans-serif');
+    text('個人累計 TOP 5',rx+rw/2,172,17,WHITE,900,'center');text(`${dateLabel(w.date)} 現在`,rx+rw/2,191,11.5,WHITE,800,'center');
+    if(w.status==='ready'){
+      w.entries.forEach((d,i)=>{const x=rx+9,y=210+i*60,ww=rw-18,first=d.rank===1;rr(x,y,ww,54,5,first?BLACK:i===1?'#e1e1e1':'#f0f0f0',first?BLACK:'#d0d0d0',1);const col=first?WHITE:BLACK;text(`${d.rank}位`,x+35,y+34,24,col,1000,'center');text(`3年${d.cls}組の`,x+77,y+21,16,col,900);text('だれか・・・',x+77,y+42,16,col,850);const num=fmt(d.count)+'問';ctx.save();ctx.font='1000 27px "Yu Gothic",Meiryo,sans-serif';let fs=27;while(ctx.measureText(num).width>106&&fs>15){fs--;ctx.font=`1000 ${fs}px "Yu Gothic",Meiryo,sans-serif`;}ctx.restore();text(num,x+ww-10,y+35,fs,col,1000,'right');});
+      if(!w.entries.length){text('まだ取り組み問題数がありません。',rx+rw/2,350,16,BLACK,900,'center');}
+      text('この中に、君はいるか！？',rx+rw/2,535,19,BLACK,1000,'center');text('積み重ねた努力は、裏切らない。',rx+rw/2,554,14,BLACK,900,'center');text(w.cutoffTie?'※同数は同順位。5人まで（同数はクラス順）。':'次にランクインするのは君だ！',rx+rw/2,573,w.cutoffTie?10:12,GRAY,800,'center');
+    }else{
+      rect(rx+17,230,rw-34,240,'#f4f4f4');text('集計日を確認してください。',rx+rw/2,330,20,BLACK,1000,'center');
+      text('今日の1問が、次のランキングにつながる。',rx+rw/2,437,12,BLACK,900,'center');
+    }
+    rr(24,594,952,61,6,WHITE,BLACK,2.4);rect(25,595,138,59,BLACK);text('BOOST',94,620,23,WHITE,1000,'center','Impact,"Arial Black",sans-serif');text('MESSAGE',94,640,17,WHITE,900,'center','Impact,"Arial Black",sans-serif');
+    text('「誰かがやる」じゃ、勝てない。',179,615,18,BLACK,1000);text('「自分もやる」が、クラスを変える！',179,638,20,BLACK,1000);text('君の10問が、クラスの順位を動かす！',964,648,13,BLACK,950,'right');
+    rect(24,660,952,33,'#f2f2f2');text('算出方法',33,672,10,BLACK,950);text('1人平均＝6分野の合計÷全生徒数　　参加率＝1問以上解いた人数÷全生徒数×100　　分野別＝分野の合計÷全生徒数',107,672,10,BLACK,750);
+    text('総取組数＝6分野合計　　個人ランキング＝個人の練習問題6分野の累計合計　　※個人の氏名・番号は掲載しません。',33,686,10,BLACK,750);
+    text('※クラス別・個人別ともにCSV取得日までの累計。',25,703,9,GRAY,700);
   }
 
   function downloadBlob(blob,name){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
@@ -473,21 +464,24 @@ footer{margin:35px auto 0;text-align:center;color:#4e4e52;font-size:12px;line-he
     string(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
     return new Blob(chunks,{type:'application/pdf'});
   }
-  const suffix=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  const suffix=()=>selectedDate();
   $('#pdfBtn').addEventListener('click',()=>{
-    if(state.size!==3)return;
+    if(state.size!==3||!validSelection())return;
     drawReport();const base64=canvas.toDataURL('image/jpeg',.93).split(',')[1];const bytes=Uint8Array.from(atob(base64),c=>c.charCodeAt(0));
     downloadBlob(pdfBytesFromJpeg(bytes),`情報Ⅰ_BOOST_DAY_クラス対抗ランキング_${suffix()}.pdf`);
   });
-  $('#pngBtn').addEventListener('click',()=>{if(state.size!==3)return;drawReport();canvas.toBlob(blob=>{if(blob)downloadBlob(blob,`情報Ⅰ_BOOST_DAY_クラス対抗ランキング_${suffix()}.png`);},'image/png');});
-  // 生徒へ公開するJSONはクラスの集計値のみ。氏名・学籍番号・出席番号・CSV原文は一切含めない。
+  $('#pngBtn').addEventListener('click',()=>{if(state.size!==3||!validSelection())return;drawReport();canvas.toBlob(blob=>{if(blob)downloadBlob(blob,`情報Ⅰ_BOOST_DAY_クラス対抗ランキング_${suffix()}.png`);},'image/png');});
+  // 生徒へ公開するJSONはクラスの集計値と個人TOP5の順位・クラス・問題数のみ。氏名・学籍番号・出席番号・CSV原文は一切含めない。
   $('#jsonBtn').addEventListener('click',()=>{
-    if(state.size!==3)return;
+    if(state.size!==3||!validSelection())return;
+    const heroes=heroesResult();
     const fields=['cls','name','students','participants','participation','total','avg','totals','fieldAvgs','fieldParticipants','scoreN','scoreAvg'];
     const classes=all().map(d=>Object.fromEntries(fields.map(k=>[k,d[k]])));
-    const payload={version:1,updatedAt:suffix(),classes};
+    // 旧JSONとの互換性を維持。個人照合キー・分野別個人データは公開しない。
+    const payload={version:1,updatedAt:suffix(),classes,heroes:{status:heroes.status,entries:heroes.entries.map(({rank,cls,count})=>({rank,cls,count})),cutoffTie:heroes.cutoffTie}};
     downloadBlob(new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json;charset=utf-8'}),'ranking.json');
   });
+  refreshDateStatus();
   if(initialHash==='#view'){navigate('view');loadPublic();}
   else if(initialHash==='#teacher'||initialHash==='#ranking')navigate('gate');
 })();
